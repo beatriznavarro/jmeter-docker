@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  master:
+    image: brnavarro/jmeterdistv1
+    container_name: master
+    hostname: master
+    command: master
+    tty: true
+    ports:
+      - "60000"
+    networks:
+      - jmeter-network       
+  server:
+    image: brnavarro/jmeterdistv1
+    command: server
+    tty: true
+    ports:
+      - "50000"
+      - "1099"
+    networks:
+      - jmeter-network
+    depends_on:
+      - master
+
+networks:
+  jmeter-network:
+    driver: bridge
